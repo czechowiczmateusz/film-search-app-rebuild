@@ -6,7 +6,7 @@ class FilmInfo extends React.Component {
         this.state = {
             movieID: 106646,
             movies: false,
-            placeholder: " "
+            placeholder: " ",
         }
     }
 
@@ -49,7 +49,7 @@ class FilmInfo extends React.Component {
 
     handleClick = (event) => {
         event.preventDefault();
-        if(!this.state.movies){
+        if(this.state.movies){
             let movies = this.state.movies;
             this.fetchNewMovie(movies[0].id);
             this.setState({
@@ -69,7 +69,7 @@ class FilmInfo extends React.Component {
                     <header className="col-xl-12 row">
                     <form className="input-group" onSubmit={this.handleClick}>
                         <input onChange={this.handleChange} placeholder="Search Movie Title..." className="form-control col-10"/>
-                        <button onClick={this.handleClick} type="button" className="btn btn-dark col-2">Search</button>
+                        <input type="submit" value="Search" className="btn btn-dark col-2"/>
                     </form>
                         <p>{this.state.placeholder}</p>
                     </header>
@@ -77,7 +77,7 @@ class FilmInfo extends React.Component {
                         <div key={this.state.movieID} className="row col-xl-6">
                             <img src={this.state.poster}/>
                         </div>
-                        <div className="col-xl-6 col-md-12">
+                        <div className="col-xl-6 col-md-12" style={{after: {content: 'witam'}}}>
                             <h3 className="col-xl-12">{this.state.title}</h3>
                             <p className="col-xl-12 overview">{this.state.overview}</p>
                         <div className="row col-xl-12">

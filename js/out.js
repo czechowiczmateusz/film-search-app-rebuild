@@ -22694,7 +22694,7 @@ var FilmInfo = function (_React$Component) {
 
         _this.handleClick = function (event) {
             event.preventDefault();
-            if (!_this.state.movies) {
+            if (_this.state.movies) {
                 var movies = _this.state.movies;
                 _this.fetchNewMovie(movies[0].id);
                 _this.setState({
@@ -22772,11 +22772,7 @@ var FilmInfo = function (_React$Component) {
                             "form",
                             { className: "input-group", onSubmit: this.handleClick },
                             _react2.default.createElement("input", { onChange: this.handleChange, placeholder: "Search Movie Title...", className: "form-control col-10" }),
-                            _react2.default.createElement(
-                                "button",
-                                { onClick: this.handleClick, type: "button", className: "btn btn-dark col-2" },
-                                "Search"
-                            )
+                            _react2.default.createElement("input", { type: "submit", value: "Search", className: "btn btn-dark col-2" })
                         ),
                         _react2.default.createElement(
                             "p",
@@ -22794,7 +22790,7 @@ var FilmInfo = function (_React$Component) {
                         ),
                         _react2.default.createElement(
                             "div",
-                            { className: "col-xl-6 col-md-12" },
+                            { className: "col-xl-6 col-md-12", style: { after: { content: 'witam' } } },
                             _react2.default.createElement(
                                 "h3",
                                 { className: "col-xl-12" },
