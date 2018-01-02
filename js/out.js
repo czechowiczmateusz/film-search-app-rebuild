@@ -22636,11 +22636,11 @@ var Footer = function (_React$Component) {
                 { className: "row col-xl-12" },
                 _react2.default.createElement(
                     "p",
-                    { className: "col-xl-4" },
+                    { className: "col-xl-4 col-md-6" },
                     "Designed by Mateusz Czechowicz"
                 ),
-                _react2.default.createElement("div", { className: "col-xl-5" }),
-                _react2.default.createElement("div", { className: "col-xl-3 img" })
+                _react2.default.createElement("div", { className: "col-xl-5 col-md-2" }),
+                _react2.default.createElement("div", { className: "col-xl-3 img col-md-4" })
             );
         }
     }]);
@@ -22694,15 +22694,15 @@ var FilmInfo = function (_React$Component) {
 
         _this.handleClick = function (event) {
             event.preventDefault();
-            if (_this.state.movies) {
+            if (!_this.state.movies && _this.state.movies[0].id === undefined) {
+                _this.setState({
+                    placeholder: "Not found"
+                });
+            } else {
                 var movies = _this.state.movies;
                 _this.fetchNewMovie(movies[0].id);
                 _this.setState({
                     placeholder: " "
-                });
-            } else {
-                _this.setState({
-                    placeholder: "Not found"
                 });
             }
         };
@@ -22770,7 +22770,7 @@ var FilmInfo = function (_React$Component) {
                         { className: "col-xl-12 row" },
                         _react2.default.createElement(
                             "form",
-                            { className: "input-group", onSubmit: this.handleClick },
+                            { className: "input-group col-xl-12", onSubmit: this.handleClick },
                             _react2.default.createElement("input", { onChange: this.handleChange, placeholder: "Search Movie Title...", className: "form-control col-10" }),
                             _react2.default.createElement("input", { type: "submit", value: "Search", className: "btn btn-dark col-2" })
                         ),
@@ -22785,7 +22785,7 @@ var FilmInfo = function (_React$Component) {
                         { className: "row main col-xl-12" },
                         _react2.default.createElement(
                             "div",
-                            { key: this.state.movieID, className: "row col-xl-6" },
+                            { key: this.state.movieID, className: "image row col-xl-6" },
                             _react2.default.createElement("img", { src: this.state.poster })
                         ),
                         _react2.default.createElement(
@@ -22811,8 +22811,8 @@ var FilmInfo = function (_React$Component) {
                                 ),
                                 _react2.default.createElement(
                                     "p",
-                                    { className: "col-xl-6 smaller" },
-                                    "Vote Average: "
+                                    { className: "col-xl-6 info" },
+                                    this.state.date
                                 )
                             ),
                             _react2.default.createElement(
@@ -22820,8 +22820,8 @@ var FilmInfo = function (_React$Component) {
                                 { className: "row col-xl-12" },
                                 _react2.default.createElement(
                                     "p",
-                                    { className: "col-xl-6 info" },
-                                    this.state.date
+                                    { className: "col-xl-6 smaller" },
+                                    "Vote Average: "
                                 ),
                                 _react2.default.createElement(
                                     "p",
@@ -22840,8 +22840,9 @@ var FilmInfo = function (_React$Component) {
                                 ),
                                 _react2.default.createElement(
                                     "p",
-                                    { className: "col-xl-6 smaller" },
-                                    "Original language: "
+                                    { className: "col-xl-6 info" },
+                                    this.state.runtime,
+                                    " mins"
                                 )
                             ),
                             _react2.default.createElement(
@@ -22849,9 +22850,8 @@ var FilmInfo = function (_React$Component) {
                                 { className: "row col-xl-12" },
                                 _react2.default.createElement(
                                     "p",
-                                    { className: "col-xl-6 info" },
-                                    this.state.runtime,
-                                    " mins"
+                                    { className: "col-xl-6 smaller" },
+                                    "Original language: "
                                 ),
                                 _react2.default.createElement(
                                     "p",
@@ -22913,7 +22913,7 @@ exports = module.exports = __webpack_require__(190)(undefined);
 
 
 // module
-exports.push([module.i, "html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline; }\n\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {\n  display: block; }\n\nbody {\n  line-height: 1; }\n\nol, ul {\n  list-style: none; }\n\nblockquote, q {\n  quotes: none; }\n\nblockquote:before, blockquote:after {\n  content: '';\n  content: none; }\n\nq:before, q:after {\n  content: '';\n  content: none; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\nbody {\n  font-family: 'Palanquin', sans-serif;\n  background-image: url(\"http://eskipaper.com/images/film-wallpaper-2.jpg\"); }\n\nheader {\n  height: 100px;\n  display: flex;\n  align-items: center;\n  background-color: rgba(0, 0, 0, 0.6); }\n  header p {\n    color: #cf0a00;\n    font-size: 20px;\n    font-weight: 900; }\n\n.main {\n  background-color: rgba(0, 0, 0, 0.6);\n  color: white; }\n  .main h3 {\n    text-transform: uppercase;\n    font-weight: bold;\n    font-size: 50px;\n    margin-bottom: 20px;\n    margin-top: 60px; }\n  .main p {\n    font-size: 25px;\n    margin-bottom: 10px; }\n  .main .info {\n    color: #cf0a00;\n    font-size: 30px;\n    text-transform: uppercase;\n    cursor: pointer;\n    transition: color 0.5s; }\n    .main .info:hover {\n      color: white; }\n  .main .smaller {\n    font-size: 20px; }\n  .main .overview {\n    margin-bottom: 40px;\n    color: darkgrey;\n    text-align: justify; }\n  .main .image {\n    display: flex;\n    justify-content: center; }\n\nfooter {\n  background-color: rgba(0, 0, 0, 0.6);\n  color: darkgrey;\n  height: 100px; }\n  footer p {\n    transition: color 0.5s;\n    display: flex;\n    align-items: center; }\n    footer p:hover {\n      color: white; }\n  footer .img {\n    background-image: url(\"https://i.imgur.com/nfXj4aB.png\");\n    background-repeat: no-repeat;\n    height: 100px; }\n", ""]);
+exports.push([module.i, "html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline; }\n\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {\n  display: block; }\n\nbody {\n  line-height: 1; }\n\nol, ul {\n  list-style: none; }\n\nblockquote, q {\n  quotes: none; }\n\nblockquote:before, blockquote:after {\n  content: '';\n  content: none; }\n\nq:before, q:after {\n  content: '';\n  content: none; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\n.row {\n  margin-left: 0;\n  margin-right: 0; }\n\nbody {\n  font-family: 'Palanquin', sans-serif;\n  background-image: url(\"http://eskipaper.com/images/film-wallpaper-2.jpg\"); }\n\nheader {\n  height: 100px;\n  display: flex;\n  align-items: center;\n  background-color: rgba(0, 0, 0, 0.6); }\n  header p {\n    color: #cf0a00;\n    font-size: 20px;\n    font-weight: 900; }\n\n.main {\n  background-color: rgba(0, 0, 0, 0.6);\n  color: white; }\n  .main h3 {\n    text-transform: uppercase;\n    font-weight: bold;\n    font-size: 50px;\n    margin-bottom: 20px;\n    margin-top: 60px; }\n  .main p {\n    font-size: 25px;\n    margin-bottom: 10px; }\n  .main .info {\n    color: #cf0a00;\n    font-size: 30px;\n    text-transform: uppercase;\n    cursor: pointer;\n    transition: color 0.5s; }\n    .main .info:hover {\n      color: white; }\n  .main .smaller {\n    font-size: 20px;\n    padding: 0; }\n  .main .overview {\n    margin-bottom: 40px;\n    color: darkgrey;\n    text-align: justify; }\n  .main img {\n    width: 100%;\n    height: auto; }\n  @media only screen and (max-width: 1199px) {\n    .main .image {\n      display: flex;\n      justify-content: center; }\n      .main .image img {\n        width: 60%; } }\n  @media only screen and (max-width: 992px) {\n    .main .image {\n      display: flex;\n      justify-content: center; }\n      .main .image img {\n        width: 80%; } }\n  @media only screen and (max-width: 767px) {\n    .main .image {\n      display: flex;\n      justify-content: center; }\n      .main .image img {\n        width: 100%; } }\n\nfooter {\n  background-color: rgba(0, 0, 0, 0.6);\n  color: darkgrey;\n  height: 85px; }\n  footer p {\n    transition: color 0.5s;\n    display: flex;\n    align-items: center; }\n    footer p:hover {\n      color: white; }\n  footer .img {\n    background-image: url(\"https://i.imgur.com/nfXj4aB.png\");\n    background-repeat: no-repeat;\n    height: 100px; }\n", ""]);
 
 // exports
 

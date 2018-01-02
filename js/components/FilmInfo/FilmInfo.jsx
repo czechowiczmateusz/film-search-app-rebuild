@@ -49,15 +49,15 @@ class FilmInfo extends React.Component {
 
     handleClick = (event) => {
         event.preventDefault();
-        if(this.state.movies){
+        if(!this.state.movies && this.state.movies[0].id === undefined){
+            this.setState({
+                placeholder: "Not found"
+            })
+        } else {
             let movies = this.state.movies;
             this.fetchNewMovie(movies[0].id);
             this.setState({
                 placeholder: " "
-            })
-        } else {
-            this.setState({
-                placeholder: "Not found"
             })
         }
     };
@@ -67,14 +67,14 @@ class FilmInfo extends React.Component {
             return (
                 <div>
                     <header className="col-xl-12 row">
-                    <form className="input-group" onSubmit={this.handleClick}>
+                    <form className="input-group col-xl-12" onSubmit={this.handleClick}>
                         <input onChange={this.handleChange} placeholder="Search Movie Title..." className="form-control col-10"/>
                         <input type="submit" value="Search" className="btn btn-dark col-2"/>
                     </form>
                         <p>{this.state.placeholder}</p>
                     </header>
                     <div className="row main col-xl-12">
-                        <div key={this.state.movieID} className="row col-xl-6">
+                        <div key={this.state.movieID} className="image row col-xl-6">
                             <img src={this.state.poster}/>
                         </div>
                         <div className="col-xl-6 col-md-12" style={{after: {content: 'witam'}}}>
@@ -82,18 +82,19 @@ class FilmInfo extends React.Component {
                             <p className="col-xl-12 overview">{this.state.overview}</p>
                         <div className="row col-xl-12">
                             <p className="col-xl-6 smaller">Release date: </p>
-                            <p className="col-xl-6 smaller">Vote Average: </p>
+                            <p className="col-xl-6 info">{this.state.date}</p>
+
                         </div>
                         <div className="row col-xl-12">
-                            <p className="col-xl-6 info">{this.state.date}</p>
+                            <p className="col-xl-6 smaller">Vote Average: </p>
                             <p className="col-xl-6 info">{this.state.vote}/10</p>
                         </div>
                         <div className="row col-xl-12">
                             <p className="col-xl-6 smaller">Runtime: </p>
-                            <p className="col-xl-6 smaller">Original language: </p>
+                            <p className="col-xl-6 info">{this.state.runtime} mins</p>
                         </div>
                         <div className="row col-xl-12">
-                            <p className="col-xl-6 info">{this.state.runtime} mins</p>
+                            <p className="col-xl-6 smaller">Original language: </p>
                             <p className="col-xl-6 info">{this.state.language}</p>
                         </div>
                         </div>

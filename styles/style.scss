@@ -1,5 +1,10 @@
 @import "reset";
 
+.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
 body {
   font-family: 'Palanquin', sans-serif;
   background-image: url("http://eskipaper.com/images/film-wallpaper-2.jpg");
@@ -26,7 +31,6 @@ header {
     font-size: 50px;
     margin-bottom: 20px;
     margin-top: 60px;
-
   }
   p{
     font-size: 25px;
@@ -44,22 +48,50 @@ header {
   }
   .smaller{
     font-size: 20px;
+    padding: 0;
   }
   .overview {
     margin-bottom: 40px;
     color: darkgrey;
     text-align: justify;
   }
-  .image {
-    display: flex;
-    justify-content: center;
+  img {
+    width: 100%;
+    height: auto;
+  }
+  @media only screen and (max-width: 1199px) {
+    .image {
+      display: flex;
+      justify-content: center;
+      img {
+        width: 60%;
+      }
+    }
+  }
+  @media only screen and (max-width: 992px) {
+    .image {
+      display: flex;
+      justify-content: center;
+      img {
+        width: 80%;
+      }
+    }
+  }
+  @media only screen and (max-width: 767px) {
+    .image {
+      display: flex;
+      justify-content: center;
+      img {
+        width: 100%;
+      }
+    }
   }
 }
 
 footer{
   background-color: rgba(0, 0, 0, 0.6);
   color: darkgrey;
-  height: 100px;
+  height: 85px;
   p {
     transition: color 0.5s;
     display: flex;
