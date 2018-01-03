@@ -22688,29 +22688,74 @@ var FilmInfo = function (_React$Component) {
             fetch(url).then(function (resp) {
                 return resp.json();
             }).then(function (data) {
-                return _this.setState({ movies: data.results });
+                return _this.setState({
+                    movies: data.results,
+                    movie1: data.results[0].title,
+                    poster1: "https://image.tmdb.org/t/p/w500" + data.results[0].poster_path,
+                    movie2: data.results[1].title,
+                    poster2: "https://image.tmdb.org/t/p/w500" + data.results[1].poster_path,
+                    movie3: data.results[2].title,
+                    poster3: "https://image.tmdb.org/t/p/w500" + data.results[2].poster_path,
+                    movie4: data.results[3].title,
+                    poster4: "https://image.tmdb.org/t/p/w500" + data.results[3].poster_path,
+                    movie5: data.results[4].title,
+                    poster5: "https://image.tmdb.org/t/p/w500" + data.results[4].poster_path,
+                    display: "block"
+                });
             });
         };
 
-        _this.handleClick = function (event) {
-            event.preventDefault();
-            if (!_this.state.movies && _this.state.movies[0].id === undefined) {
-                _this.setState({
-                    placeholder: "Not found"
-                });
-            } else {
+        _this.handleClick1 = function (event) {
+            if (_this.state.movie1) {
+                event.preventDefault();
                 var movies = _this.state.movies;
                 _this.fetchNewMovie(movies[0].id);
                 _this.setState({
-                    placeholder: " "
+                    display: "none"
                 });
             }
+        };
+
+        _this.handleClick2 = function (event) {
+            event.preventDefault();
+            var movies = _this.state.movies;
+            _this.fetchNewMovie(movies[1].id);
+            _this.setState({
+                display: "none"
+            });
+        };
+
+        _this.handleClick3 = function (event) {
+            event.preventDefault();
+            var movies = _this.state.movies;
+            _this.fetchNewMovie(movies[2].id);
+            _this.setState({
+                display: "none"
+            });
+        };
+
+        _this.handleClick4 = function (event) {
+            event.preventDefault();
+            var movies = _this.state.movies;
+            _this.fetchNewMovie(movies[3].id);
+            _this.setState({
+                display: "none"
+            });
+        };
+
+        _this.handleClick5 = function (event) {
+            event.preventDefault();
+            var movies = _this.state.movies;
+            _this.fetchNewMovie(movies[4].id);
+            _this.setState({
+                display: "none"
+            });
         };
 
         _this.state = {
             movieID: 106646,
             movies: false,
-            placeholder: " "
+            display: "none"
         };
         return _this;
     }
@@ -22761,110 +22806,155 @@ var FilmInfo = function (_React$Component) {
     }, {
         key: "render",
         value: function render() {
-            if (this.state.movieID) {
-                return _react2.default.createElement(
-                    "div",
-                    null,
+            return _react2.default.createElement(
+                "div",
+                null,
+                _react2.default.createElement(
+                    "header",
+                    { className: "col-xl-12 row" },
                     _react2.default.createElement(
-                        "header",
-                        { className: "col-xl-12 row" },
-                        _react2.default.createElement(
-                            "form",
-                            { className: "input-group col-xl-12", onSubmit: this.handleClick },
-                            _react2.default.createElement("input", { onChange: this.handleChange, placeholder: "Search Movie Title...", className: "form-control col-10" }),
-                            _react2.default.createElement("input", { type: "submit", value: "Search", className: "btn btn-dark col-2" })
-                        ),
+                        "form",
+                        { className: "input-group col-xl-12", onSubmit: this.handleClick },
+                        _react2.default.createElement("input", { onChange: this.handleChange, placeholder: "Search Movie Title...", className: "form-control col-10" }),
+                        _react2.default.createElement("input", { type: "submit", value: "Search", className: "btn btn-dark col-2" })
+                    )
+                ),
+                _react2.default.createElement(
+                    "div",
+                    { className: "col-xl-12 typeahead row", style: { display: this.state.display } },
+                    _react2.default.createElement(
+                        "div",
+                        { className: "col-xl-12 row", onClick: this.handleClick1 },
+                        _react2.default.createElement("img", { className: "col-1", src: this.state.poster1 }),
                         _react2.default.createElement(
                             "p",
-                            null,
-                            this.state.placeholder
+                            { className: "col-6" },
+                            this.state.movie1
                         )
                     ),
                     _react2.default.createElement(
                         "div",
-                        { className: "row main col-xl-12" },
+                        { className: "col-xl-12 row", onClick: this.handleClick2 },
+                        _react2.default.createElement("img", { className: "col-1", src: this.state.poster2 }),
                         _react2.default.createElement(
-                            "div",
-                            { key: this.state.movieID, className: "image row col-xl-6" },
-                            _react2.default.createElement("img", { src: this.state.poster })
+                            "p",
+                            { className: "col-6" },
+                            this.state.movie2
+                        )
+                    ),
+                    _react2.default.createElement(
+                        "div",
+                        { className: "col-xl-12 row", onClick: this.handleClick3 },
+                        _react2.default.createElement("img", { className: "col-1", src: this.state.poster3 }),
+                        _react2.default.createElement(
+                            "p",
+                            { className: "col-6" },
+                            this.state.movie3
+                        )
+                    ),
+                    _react2.default.createElement(
+                        "div",
+                        { className: "col-xl-12 row", onClick: this.handleClick4 },
+                        _react2.default.createElement("img", { className: "col-1", src: this.state.poster4 }),
+                        _react2.default.createElement(
+                            "p",
+                            { className: "col-6" },
+                            this.state.movie4
+                        )
+                    ),
+                    _react2.default.createElement(
+                        "div",
+                        { className: "col-xl-12 row", onClick: this.handleClick5 },
+                        _react2.default.createElement("img", { className: "col-1", src: this.state.poster5 }),
+                        _react2.default.createElement(
+                            "p",
+                            { className: "col-6" },
+                            this.state.movie5
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    "div",
+                    { className: "row main col-xl-12" },
+                    _react2.default.createElement(
+                        "div",
+                        { key: this.state.movieID, className: "image row col-xl-6" },
+                        _react2.default.createElement("img", { src: this.state.poster })
+                    ),
+                    _react2.default.createElement(
+                        "div",
+                        { className: "col-xl-6 col-md-12", style: { after: { content: 'witam' } } },
+                        _react2.default.createElement(
+                            "h3",
+                            { className: "col-xl-12" },
+                            this.state.title
+                        ),
+                        _react2.default.createElement(
+                            "p",
+                            { className: "col-xl-12 overview" },
+                            this.state.overview
                         ),
                         _react2.default.createElement(
                             "div",
-                            { className: "col-xl-6 col-md-12", style: { after: { content: 'witam' } } },
+                            { className: "row col-xl-12" },
                             _react2.default.createElement(
-                                "h3",
-                                { className: "col-xl-12" },
-                                this.state.title
+                                "p",
+                                { className: "col-xl-6 smaller" },
+                                "Release date: "
                             ),
                             _react2.default.createElement(
                                 "p",
-                                { className: "col-xl-12 overview" },
-                                this.state.overview
+                                { className: "col-xl-6 info" },
+                                this.state.date
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "row col-xl-12" },
+                            _react2.default.createElement(
+                                "p",
+                                { className: "col-xl-6 smaller" },
+                                "Vote Average: "
                             ),
                             _react2.default.createElement(
-                                "div",
-                                { className: "row col-xl-12" },
-                                _react2.default.createElement(
-                                    "p",
-                                    { className: "col-xl-6 smaller" },
-                                    "Release date: "
-                                ),
-                                _react2.default.createElement(
-                                    "p",
-                                    { className: "col-xl-6 info" },
-                                    this.state.date
-                                )
+                                "p",
+                                { className: "col-xl-6 info" },
+                                this.state.vote,
+                                "/10"
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "row col-xl-12" },
+                            _react2.default.createElement(
+                                "p",
+                                { className: "col-xl-6 smaller" },
+                                "Runtime: "
                             ),
                             _react2.default.createElement(
-                                "div",
-                                { className: "row col-xl-12" },
-                                _react2.default.createElement(
-                                    "p",
-                                    { className: "col-xl-6 smaller" },
-                                    "Vote Average: "
-                                ),
-                                _react2.default.createElement(
-                                    "p",
-                                    { className: "col-xl-6 info" },
-                                    this.state.vote,
-                                    "/10"
-                                )
+                                "p",
+                                { className: "col-xl-6 info" },
+                                this.state.runtime,
+                                " mins"
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "row col-xl-12" },
+                            _react2.default.createElement(
+                                "p",
+                                { className: "col-xl-6 smaller" },
+                                "Original language: "
                             ),
                             _react2.default.createElement(
-                                "div",
-                                { className: "row col-xl-12" },
-                                _react2.default.createElement(
-                                    "p",
-                                    { className: "col-xl-6 smaller" },
-                                    "Runtime: "
-                                ),
-                                _react2.default.createElement(
-                                    "p",
-                                    { className: "col-xl-6 info" },
-                                    this.state.runtime,
-                                    " mins"
-                                )
-                            ),
-                            _react2.default.createElement(
-                                "div",
-                                { className: "row col-xl-12" },
-                                _react2.default.createElement(
-                                    "p",
-                                    { className: "col-xl-6 smaller" },
-                                    "Original language: "
-                                ),
-                                _react2.default.createElement(
-                                    "p",
-                                    { className: "col-xl-6 info" },
-                                    this.state.language
-                                )
+                                "p",
+                                { className: "col-xl-6 info" },
+                                this.state.language
                             )
                         )
                     )
-                );
-            } else {
-                return null;
-            }
+                )
+            );
         }
     }]);
 
@@ -22913,7 +23003,7 @@ exports = module.exports = __webpack_require__(190)(undefined);
 
 
 // module
-exports.push([module.i, "html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline; }\n\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {\n  display: block; }\n\nbody {\n  line-height: 1; }\n\nol, ul {\n  list-style: none; }\n\nblockquote, q {\n  quotes: none; }\n\nblockquote:before, blockquote:after {\n  content: '';\n  content: none; }\n\nq:before, q:after {\n  content: '';\n  content: none; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\n.row {\n  margin-left: 0;\n  margin-right: 0; }\n\nbody {\n  font-family: 'Palanquin', sans-serif;\n  background-image: url(\"http://eskipaper.com/images/film-wallpaper-2.jpg\"); }\n\nheader {\n  height: 100px;\n  display: flex;\n  align-items: center;\n  background-color: rgba(0, 0, 0, 0.6); }\n  header p {\n    color: #cf0a00;\n    font-size: 20px;\n    font-weight: 900; }\n\n.main {\n  background-color: rgba(0, 0, 0, 0.6);\n  color: white; }\n  .main h3 {\n    text-transform: uppercase;\n    font-weight: bold;\n    font-size: 50px;\n    margin-bottom: 20px;\n    margin-top: 60px; }\n  .main p {\n    font-size: 25px;\n    margin-bottom: 10px; }\n  .main .info {\n    color: #cf0a00;\n    font-size: 30px;\n    text-transform: uppercase;\n    cursor: pointer;\n    transition: color 0.5s; }\n    .main .info:hover {\n      color: white; }\n  .main .smaller {\n    font-size: 20px;\n    padding: 0; }\n  .main .overview {\n    margin-bottom: 40px;\n    color: darkgrey;\n    text-align: justify; }\n  .main img {\n    width: 100%;\n    height: auto; }\n  @media only screen and (max-width: 1199px) {\n    .main .image {\n      display: flex;\n      justify-content: center; }\n      .main .image img {\n        width: 60%; } }\n  @media only screen and (max-width: 992px) {\n    .main .image {\n      display: flex;\n      justify-content: center; }\n      .main .image img {\n        width: 80%; } }\n  @media only screen and (max-width: 767px) {\n    .main .image {\n      display: flex;\n      justify-content: center; }\n      .main .image img {\n        width: 100%; } }\n\nfooter {\n  background-color: rgba(0, 0, 0, 0.6);\n  color: darkgrey;\n  height: 85px; }\n  footer p {\n    transition: color 0.5s;\n    display: flex;\n    align-items: center; }\n    footer p:hover {\n      color: white; }\n  footer .img {\n    background-image: url(\"https://i.imgur.com/nfXj4aB.png\");\n    background-repeat: no-repeat;\n    height: 100px; }\n", ""]);
+exports.push([module.i, "html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline; }\n\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {\n  display: block; }\n\nbody {\n  line-height: 1; }\n\nol, ul {\n  list-style: none; }\n\nblockquote, q {\n  quotes: none; }\n\nblockquote:before, blockquote:after {\n  content: '';\n  content: none; }\n\nq:before, q:after {\n  content: '';\n  content: none; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\n.row {\n  margin-left: 0;\n  margin-right: 0; }\n\nbody {\n  font-family: 'Palanquin', sans-serif;\n  background-image: url(\"http://eskipaper.com/images/film-wallpaper-2.jpg\"); }\n\nheader {\n  height: 100px;\n  display: flex;\n  align-items: center;\n  background-color: rgba(0, 0, 0, 0.6); }\n  header p {\n    color: #cf0a00;\n    font-size: 20px;\n    font-weight: 900; }\n\n.typeahead {\n  background-color: rgba(0, 0, 0, 0.6);\n  display: flex;\n  justify-content: center; }\n  .typeahead div {\n    height: 70px;\n    padding: 5px;\n    cursor: pointer; }\n    .typeahead div:last-of-type {\n      border: none; }\n    .typeahead div p {\n      display: flex;\n      align-items: center;\n      color: white;\n      font-size: 30px; }\n\n.main {\n  background-color: rgba(0, 0, 0, 0.6);\n  color: white;\n  position: relative; }\n  .main h3 {\n    text-transform: uppercase;\n    font-weight: bold;\n    font-size: 50px;\n    margin-bottom: 20px;\n    margin-top: 60px; }\n  .main p {\n    font-size: 25px;\n    margin-bottom: 10px; }\n  .main .info {\n    color: #cf0a00;\n    font-size: 30px;\n    text-transform: uppercase;\n    cursor: pointer;\n    transition: color 0.5s; }\n    .main .info:hover {\n      color: white; }\n  .main .smaller {\n    font-size: 20px;\n    padding: 0; }\n  .main .overview {\n    margin-bottom: 40px;\n    color: darkgrey;\n    text-align: justify; }\n  .main img {\n    width: 100%;\n    height: auto; }\n  @media only screen and (max-width: 1199px) {\n    .main .image {\n      display: flex;\n      justify-content: center; }\n      .main .image img {\n        width: 60%; } }\n  @media only screen and (max-width: 992px) {\n    .main .image {\n      display: flex;\n      justify-content: center; }\n      .main .image img {\n        width: 80%; } }\n  @media only screen and (max-width: 767px) {\n    .main .image {\n      display: flex;\n      justify-content: center; }\n      .main .image img {\n        width: 100%; } }\n\nfooter {\n  background-color: rgba(0, 0, 0, 0.6);\n  color: darkgrey;\n  height: 85px; }\n  footer p {\n    transition: color 0.5s;\n    display: flex;\n    align-items: center; }\n    footer p:hover {\n      color: white; }\n  footer .img {\n    background-image: url(\"https://i.imgur.com/nfXj4aB.png\");\n    background-repeat: no-repeat;\n    height: 100px; }\n", ""]);
 
 // exports
 

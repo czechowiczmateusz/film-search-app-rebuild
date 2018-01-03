@@ -22,9 +22,30 @@ header {
   }
 }
 
+.typeahead {
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  div {
+    height: 70px;
+    padding: 5px;
+    cursor: pointer;
+    &:last-of-type {
+      border: none;
+    }
+    p {
+      display: flex;
+      align-items: center;
+      color: white;
+      font-size: 30px;
+    }
+  }
+}
+
 .main {
   background-color: rgba(0, 0, 0, 0.6);
   color: white;
+  position: relative;
   h3{
     text-transform: uppercase;
     font-weight: bold;
