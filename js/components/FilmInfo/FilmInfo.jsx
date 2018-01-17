@@ -112,8 +112,7 @@ class FilmInfo extends React.Component {
                 <div>
                     <header className="col-xl-12 row">
                     <form className="input-group col-xl-12" onSubmit={this.handleClick}>
-                        <input onChange={this.handleChange} placeholder="Search Movie Title..." className="form-control col-10"/>
-                        <input type="submit" value="Search" className="btn btn-dark col-2"/>
+                        <input onChange={this.handleChange} placeholder="Search Movie Title..." className="form-control col-12"/>
                     </form>
                     </header>
                         <div className="col-xl-12 typeahead row" style={{display: this.state.display}}>

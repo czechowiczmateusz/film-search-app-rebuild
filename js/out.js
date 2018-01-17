@@ -22815,8 +22815,7 @@ var FilmInfo = function (_React$Component) {
                     _react2.default.createElement(
                         "form",
                         { className: "input-group col-xl-12", onSubmit: this.handleClick },
-                        _react2.default.createElement("input", { onChange: this.handleChange, placeholder: "Search Movie Title...", className: "form-control col-10" }),
-                        _react2.default.createElement("input", { type: "submit", value: "Search", className: "btn btn-dark col-2" })
+                        _react2.default.createElement("input", { onChange: this.handleChange, placeholder: "Search Movie Title...", className: "form-control col-12" })
                     )
                 ),
                 _react2.default.createElement(
