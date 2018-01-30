@@ -20,7 +20,8 @@ class FilmInfo extends React.Component {
                 poster:`https://image.tmdb.org/t/p/w500${data.poster_path}`,
                 runtime: data.runtime,
                 date: data.release_date,
-                language: data.original_language
+                language: data.original_language,
+                back: `https://image.tmdb.org/t/p/original${data.backdrop_path}`
         }));
     }
 
@@ -56,6 +57,7 @@ class FilmInfo extends React.Component {
                     runtime: data.runtime,
                     date: data.release_date,
                     language: data.original_language,
+                    back: `https://image.tmdb.org/t/p/original${data.backdrop_path}`
                 }));
         }
     }
@@ -108,6 +110,7 @@ class FilmInfo extends React.Component {
     };
 
     render(){
+        document.body.style.backgroundImage = `url(${this.state.back})`;
             return (
                 <div>
                     <header className="col-xl-12 row">
