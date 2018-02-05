@@ -22808,7 +22808,7 @@ var FilmInfo = function (_React$Component) {
     }, {
         key: "render",
         value: function render() {
-            document.body.style.backgroundImage = "url(" + this.state.back + ")";
+            screen.width < 800 ? document.body.style.backgroundColor = '#080C12' : document.body.style.backgroundImage = "url(" + this.state.back + ")";
             return _react2.default.createElement(
                 "div",
                 null,

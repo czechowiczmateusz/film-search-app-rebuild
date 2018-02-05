@@ -110,7 +110,7 @@ class FilmInfo extends React.Component {
     };
 
     render(){
-        document.body.style.backgroundImage = `url(${this.state.back})`;
+        screen.width < 800 ? document.body.style.backgroundColor = '#080C12' : document.body.style.backgroundImage = `url(${this.state.back})`;
             return (
                 <div>
                     <header className="col-xl-12 row">
