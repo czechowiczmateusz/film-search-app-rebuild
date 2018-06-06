@@ -22684,25 +22684,29 @@ var FilmInfo = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (FilmInfo.__proto__ || Object.getPrototypeOf(FilmInfo)).call(this, props));
 
         _this.handleChange = function (event) {
-            var url = "https://api.themoviedb.org/3/search/movie?query=%" + event.target.value + "&api_key=dc10a74e3b456f7ea1ca583b9da65d68";
-            fetch(url).then(function (resp) {
-                return resp.json();
-            }).then(function (data) {
-                return _this.setState({
-                    movies: data.results,
-                    movie1: data.results[0].title,
-                    poster1: "https://image.tmdb.org/t/p/w500" + data.results[0].poster_path,
-                    movie2: data.results[1].title,
-                    poster2: "https://image.tmdb.org/t/p/w500" + data.results[1].poster_path,
-                    movie3: data.results[2].title,
-                    poster3: "https://image.tmdb.org/t/p/w500" + data.results[2].poster_path,
-                    movie4: data.results[3].title,
-                    poster4: "https://image.tmdb.org/t/p/w500" + data.results[3].poster_path,
-                    movie5: data.results[4].title,
-                    poster5: "https://image.tmdb.org/t/p/w500" + data.results[4].poster_path,
-                    display: "block"
+            if (_this.state.response) {
+                var url = "https://api.themoviedb.org/3/search/movie?query=%" + event.target.value + "&api_key=dc10a74e3b456f7ea1ca583b9da65d68";
+                fetch(url).then(function (resp) {
+                    return resp.json();
+                }).then(function (data) {
+                    return _this.setState({
+                        movies: data.results,
+                        movie1: data.results[0].title,
+                        poster1: "https://image.tmdb.org/t/p/w500" + data.results[0].poster_path,
+                        movie2: data.results[1].title,
+                        poster2: "https://image.tmdb.org/t/p/w500" + data.results[1].poster_path,
+                        movie3: data.results[2].title,
+                        poster3: "https://image.tmdb.org/t/p/w500" + data.results[2].poster_path,
+                        movie4: data.results[3].title,
+                        poster4: "https://image.tmdb.org/t/p/w500" + data.results[3].poster_path,
+                        movie5: data.results[4].title,
+                        poster5: "https://image.tmdb.org/t/p/w500" + data.results[4].poster_path,
+                        display: "block"
+                    });
                 });
-            });
+            } else {
+                return null;
+            }
         };
 
         _this.handleClick1 = function (event) {
@@ -22753,6 +22757,7 @@ var FilmInfo = function (_React$Component) {
         };
 
         _this.state = {
+            response: false,
             movieID: 106646,
             movies: false,
             display: "none"
@@ -22770,6 +22775,7 @@ var FilmInfo = function (_React$Component) {
                 return resp.json();
             }).then(function (data) {
                 return _this2.setState({
+                    response: data,
                     title: data.original_title,
                     overview: data.overview,
                     vote: data.vote_average,
@@ -22809,154 +22815,158 @@ var FilmInfo = function (_React$Component) {
         key: "render",
         value: function render() {
             screen.width < 800 ? document.body.style.backgroundColor = '#080C12' : document.body.style.backgroundImage = "url(" + this.state.back + ")";
-            return _react2.default.createElement(
-                "div",
-                null,
-                _react2.default.createElement(
-                    "header",
-                    { className: "col-xl-12 row" },
-                    _react2.default.createElement(
-                        "form",
-                        { className: "input-group col-xl-12", onSubmit: this.handleClick },
-                        _react2.default.createElement("input", { onChange: this.handleChange, placeholder: "Search Movie Title...", className: "form-control col-12" })
-                    )
-                ),
-                _react2.default.createElement(
+            if (this.state.response) {
+                return _react2.default.createElement(
                     "div",
-                    { className: "col-xl-12 typeahead row", style: { display: this.state.display } },
+                    null,
                     _react2.default.createElement(
-                        "div",
-                        { className: "col-xl-12 row", onClick: this.handleClick1 },
-                        _react2.default.createElement("img", { className: "col-1", src: this.state.poster1 }),
+                        "header",
+                        { className: "col-xl-12 row" },
                         _react2.default.createElement(
-                            "p",
-                            { className: "col-6" },
-                            this.state.movie1
+                            "form",
+                            { className: "input-group col-xl-12", onSubmit: this.handleClick },
+                            _react2.default.createElement("input", { onChange: this.handleChange, placeholder: "Search Movie Title...", className: "form-control col-12" })
                         )
                     ),
                     _react2.default.createElement(
                         "div",
-                        { className: "col-xl-12 row", onClick: this.handleClick2 },
-                        _react2.default.createElement("img", { className: "col-1", src: this.state.poster2 }),
+                        { className: "col-xl-12 typeahead row", style: { display: this.state.display } },
                         _react2.default.createElement(
-                            "p",
-                            { className: "col-6" },
-                            this.state.movie2
+                            "div",
+                            { className: "col-xl-12 row", onClick: this.handleClick1 },
+                            _react2.default.createElement("img", { className: "col-1", src: this.state.poster1 }),
+                            _react2.default.createElement(
+                                "p",
+                                { className: "col-6" },
+                                this.state.movie1
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "col-xl-12 row", onClick: this.handleClick2 },
+                            _react2.default.createElement("img", { className: "col-1", src: this.state.poster2 }),
+                            _react2.default.createElement(
+                                "p",
+                                { className: "col-6" },
+                                this.state.movie2
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "col-xl-12 row", onClick: this.handleClick3 },
+                            _react2.default.createElement("img", { className: "col-1", src: this.state.poster3 }),
+                            _react2.default.createElement(
+                                "p",
+                                { className: "col-6" },
+                                this.state.movie3
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "col-xl-12 row", onClick: this.handleClick4 },
+                            _react2.default.createElement("img", { className: "col-1", src: this.state.poster4 }),
+                            _react2.default.createElement(
+                                "p",
+                                { className: "col-6" },
+                                this.state.movie4
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "col-xl-12 row", onClick: this.handleClick5 },
+                            _react2.default.createElement("img", { className: "col-1", src: this.state.poster5 }),
+                            _react2.default.createElement(
+                                "p",
+                                { className: "col-6" },
+                                this.state.movie5
+                            )
                         )
                     ),
                     _react2.default.createElement(
                         "div",
-                        { className: "col-xl-12 row", onClick: this.handleClick3 },
-                        _react2.default.createElement("img", { className: "col-1", src: this.state.poster3 }),
+                        { className: "row main col-xl-12" },
                         _react2.default.createElement(
-                            "p",
-                            { className: "col-6" },
-                            this.state.movie3
-                        )
-                    ),
-                    _react2.default.createElement(
-                        "div",
-                        { className: "col-xl-12 row", onClick: this.handleClick4 },
-                        _react2.default.createElement("img", { className: "col-1", src: this.state.poster4 }),
+                            "div",
+                            { key: this.state.movieID, className: "image row col-xl-6" },
+                            _react2.default.createElement("img", { src: this.state.poster })
+                        ),
                         _react2.default.createElement(
-                            "p",
-                            { className: "col-6" },
-                            this.state.movie4
-                        )
-                    ),
-                    _react2.default.createElement(
-                        "div",
-                        { className: "col-xl-12 row", onClick: this.handleClick5 },
-                        _react2.default.createElement("img", { className: "col-1", src: this.state.poster5 }),
-                        _react2.default.createElement(
-                            "p",
-                            { className: "col-6" },
-                            this.state.movie5
+                            "div",
+                            { className: "col-xl-6 col-md-12", style: { after: { content: 'witam' } } },
+                            _react2.default.createElement(
+                                "h3",
+                                { className: "col-xl-12" },
+                                this.state.title
+                            ),
+                            _react2.default.createElement(
+                                "p",
+                                { className: "col-xl-12 overview" },
+                                this.state.overview
+                            ),
+                            _react2.default.createElement(
+                                "div",
+                                { className: "row col-xl-12" },
+                                _react2.default.createElement(
+                                    "p",
+                                    { className: "col-xl-6 smaller" },
+                                    "Release date: "
+                                ),
+                                _react2.default.createElement(
+                                    "p",
+                                    { className: "col-xl-6 info" },
+                                    this.state.date
+                                )
+                            ),
+                            _react2.default.createElement(
+                                "div",
+                                { className: "row col-xl-12" },
+                                _react2.default.createElement(
+                                    "p",
+                                    { className: "col-xl-6 smaller" },
+                                    "Vote Average: "
+                                ),
+                                _react2.default.createElement(
+                                    "p",
+                                    { className: "col-xl-6 info" },
+                                    this.state.vote,
+                                    "/10"
+                                )
+                            ),
+                            _react2.default.createElement(
+                                "div",
+                                { className: "row col-xl-12" },
+                                _react2.default.createElement(
+                                    "p",
+                                    { className: "col-xl-6 smaller" },
+                                    "Runtime: "
+                                ),
+                                _react2.default.createElement(
+                                    "p",
+                                    { className: "col-xl-6 info" },
+                                    this.state.runtime,
+                                    " mins"
+                                )
+                            ),
+                            _react2.default.createElement(
+                                "div",
+                                { className: "row col-xl-12" },
+                                _react2.default.createElement(
+                                    "p",
+                                    { className: "col-xl-6 smaller" },
+                                    "Original language: "
+                                ),
+                                _react2.default.createElement(
+                                    "p",
+                                    { className: "col-xl-6 info" },
+                                    this.state.language
+                                )
+                            )
                         )
                     )
-                ),
-                _react2.default.createElement(
-                    "div",
-                    { className: "row main col-xl-12" },
-                    _react2.default.createElement(
-                        "div",
-                        { key: this.state.movieID, className: "image row col-xl-6" },
-                        _react2.default.createElement("img", { src: this.state.poster })
-                    ),
-                    _react2.default.createElement(
-                        "div",
-                        { className: "col-xl-6 col-md-12", style: { after: { content: 'witam' } } },
-                        _react2.default.createElement(
-                            "h3",
-                            { className: "col-xl-12" },
-                            this.state.title
-                        ),
-                        _react2.default.createElement(
-                            "p",
-                            { className: "col-xl-12 overview" },
-                            this.state.overview
-                        ),
-                        _react2.default.createElement(
-                            "div",
-                            { className: "row col-xl-12" },
-                            _react2.default.createElement(
-                                "p",
-                                { className: "col-xl-6 smaller" },
-                                "Release date: "
-                            ),
-                            _react2.default.createElement(
-                                "p",
-                                { className: "col-xl-6 info" },
-                                this.state.date
-                            )
-                        ),
-                        _react2.default.createElement(
-                            "div",
-                            { className: "row col-xl-12" },
-                            _react2.default.createElement(
-                                "p",
-                                { className: "col-xl-6 smaller" },
-                                "Vote Average: "
-                            ),
-                            _react2.default.createElement(
-                                "p",
-                                { className: "col-xl-6 info" },
-                                this.state.vote,
-                                "/10"
-                            )
-                        ),
-                        _react2.default.createElement(
-                            "div",
-                            { className: "row col-xl-12" },
-                            _react2.default.createElement(
-                                "p",
-                                { className: "col-xl-6 smaller" },
-                                "Runtime: "
-                            ),
-                            _react2.default.createElement(
-                                "p",
-                                { className: "col-xl-6 info" },
-                                this.state.runtime,
-                                " mins"
-                            )
-                        ),
-                        _react2.default.createElement(
-                            "div",
-                            { className: "row col-xl-12" },
-                            _react2.default.createElement(
-                                "p",
-                                { className: "col-xl-6 smaller" },
-                                "Original language: "
-                            ),
-                            _react2.default.createElement(
-                                "p",
-                                { className: "col-xl-6 info" },
-                                this.state.language
-                            )
-                        )
-                    )
-                )
-            );
+                );
+            } else {
+                return null;
+            }
         }
     }]);
 
