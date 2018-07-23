@@ -1,35 +1,35 @@
 import React from 'react';
 
 class FilmInfo extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             response: false,
-            movieID: 106646,
+            movieID: 411088,
             movies: false,
             display: "none"
         }
     }
 
-    componentDidMount(){
-        let url = `https://api.themoviedb.org/3/movie/${this.state.movieID}?api_key=dc10a74e3b456f7ea1ca583b9da65d68`;
+    componentDidMount() {
+        let url = `https://api.themoviedb.org/3/movie/${this.state.movieID}?api_key=dc10a74e3b456f7ea1ca583b9da65d68&language=en-US`;
         fetch(url).then(resp => resp.json()).then((data) =>
             this.setState({
                 response: data,
                 title: data.original_title,
                 overview: data.overview,
                 vote: data.vote_average,
-                poster:`https://image.tmdb.org/t/p/w500${data.poster_path}`,
+                poster: `https://image.tmdb.org/t/p/w500${data.poster_path}`,
                 runtime: data.runtime,
                 date: data.release_date,
                 language: data.original_language,
                 back: `https://image.tmdb.org/t/p/original${data.backdrop_path}`
-        }));
+            }));
     }
 
     handleChange = (event) => {
-        if(this.state.response) {
-            let url = `https://api.themoviedb.org/3/search/movie?query=%${event.target.value}&api_key=dc10a74e3b456f7ea1ca583b9da65d68`;
+        if (this.state.response && event.target.value.length > 0) {
+            let url = `https://api.themoviedb.org/3/search/movie?query=%${event.target.value}&sort_by=popularity.desc&api_key=dc10a74e3b456f7ea1ca583b9da65d68`;
             fetch(url).then(resp => resp.json()).then(data =>
                 this.setState({
                     movies: data.results,
@@ -44,14 +44,21 @@ class FilmInfo extends React.Component {
                     movie5: data.results[4].title,
                     poster5: `https://image.tmdb.org/t/p/w500${data.results[4].poster_path}`,
                     display: "block"
-                }))
+                }));
+                console.log(this.state.movieID)
+        } else if(event.target.value.length === 0) {
+            this.setState({
+                display: "none"
+            });
         } else {
-            return null;
+            this.setState({
+                display: "none"
+            })
         }
     };
 
     fetchNewMovie(movieID) {
-        if(this.state.movies) {
+        if (this.state.movies) {
             let url = `https://api.themoviedb.org/3/movie/${movieID}?api_key=dc10a74e3b456f7ea1ca583b9da65d68`;
             fetch(url).then(resp => resp.json()).then(data =>
                 this.setState({
@@ -64,18 +71,30 @@ class FilmInfo extends React.Component {
                     date: data.release_date,
                     language: data.original_language,
                     back: `https://image.tmdb.org/t/p/original${data.backdrop_path}`
-                }));
+                })
+            );
+        }
+    }
+
+    changeTitle(movieID) {
+        if(this.state.movies) {
+            let url = `https://api.themoviedb.org/3/movie/${movieID}?api_key=dc10a74e3b456f7ea1ca583b9da65d68`;
+            fetch(url).then(resp => resp.json()).then(data => {
+                document.title = data.original_title
+            })
         }
     }
 
     handleClick1 = (event) => {
-        if(this.state.movie1) {
+        if (this.state.movie1) {
             event.preventDefault();
             let movies = this.state.movies;
             this.fetchNewMovie(movies[0].id);
             this.setState({
                 display: "none"
-            })
+            });
+        } else {
+            return null
         }
     };
 
@@ -83,6 +102,7 @@ class FilmInfo extends React.Component {
         event.preventDefault();
         let movies = this.state.movies;
         this.fetchNewMovie(movies[1].id);
+        this.changeTitle(movies[1].id);
         this.setState({
             display: "none"
         })
@@ -115,35 +135,36 @@ class FilmInfo extends React.Component {
         })
     };
 
-    render(){
+    render() {
         screen.width < 800 ? document.body.style.backgroundColor = '#080C12' : document.body.style.backgroundImage = `url(${this.state.back})`;
-        if(this.state.response) {
+        if (this.state.response) {
             return (
                 <div>
                     <header className="col-xl-12 row">
                         <form className="input-group col-xl-12" onSubmit={this.handleClick}>
-                            <input onChange={this.handleChange} placeholder="Search Movie Title..." className="form-control col-12"/>
+                            <input onChange={this.handleChange} placeholder="Search Movie Title..."
+                                   className="form-control col-12"/>
                         </form>
                     </header>
                     <div className="col-xl-12 typeahead row" style={{display: this.state.display}}>
                         <div className="col-xl-12 row" onClick={this.handleClick1}>
-                            <img className="col-1" src={this.state.poster1} />
+                            <img className="col-1" src={this.state.poster1}/>
                             <p className="col-6">{this.state.movie1}</p>
                         </div>
                         <div className="col-xl-12 row" onClick={this.handleClick2}>
-                            <img className="col-1" src={this.state.poster2} />
+                            <img className="col-1" src={this.state.poster2}/>
                             <p className="col-6">{this.state.movie2}</p>
                         </div>
                         <div className="col-xl-12 row" onClick={this.handleClick3}>
-                            <img className="col-1" src={this.state.poster3} />
+                            <img className="col-1" src={this.state.poster3}/>
                             <p className="col-6">{this.state.movie3}</p>
                         </div>
                         <div className="col-xl-12 row" onClick={this.handleClick4}>
-                            <img className="col-1" src={this.state.poster4} />
+                            <img className="col-1" src={this.state.poster4}/>
                             <p className="col-6">{this.state.movie4}</p>
                         </div>
                         <div className="col-xl-12 row" onClick={this.handleClick5}>
-                            <img className="col-1" src={this.state.poster5} />
+                            <img className="col-1" src={this.state.poster5}/>
                             <p className="col-6">{this.state.movie5}</p>
                         </div>
                     </div>
