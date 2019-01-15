@@ -7,7 +7,7 @@ class FilmInfo extends React.Component {
             response: false,
             movieID: 411088,
             movies: false,
-            display: "none"
+            display: false
         }
     }
 
@@ -43,15 +43,15 @@ class FilmInfo extends React.Component {
                     poster4: data.results[3] ? `https://image.tmdb.org/t/p/w500${data.results[3].poster_path}` : null,
                     movie5: data.results[4] ? data.results[4].title : null,
                     poster5: data.results[4] ? `https://image.tmdb.org/t/p/w500${data.results[4].poster_path}` : null,
-                    display: data.results[0] ? "block" : "none"
+                    display: !!data.results[0]
                 }));
         } else if(event.target.value.length <= 1) {
             this.setState({
-                display: "none"
+                display: false
             });
         } else {
             this.setState({
-                display: "none"
+                display: false
             })
         }
     };
@@ -89,7 +89,7 @@ class FilmInfo extends React.Component {
         this.fetchNewMovie(movies[id].id);
         this.changeTitle(movies[id].id);
         this.setState({
-            display: "none"
+            display: false
         })
     };
 
@@ -104,7 +104,7 @@ class FilmInfo extends React.Component {
                                    className="form-control col-12"/>
                         </form>
                     </header>
-                    <div className="col-xl-12 typeahead row" style={{display: this.state.display}}>
+                    <div className="col-xl-12 typeahead row" style={{display: this.state.display ? "block" : "none"}}>
                         <div className="col-xl-12 row" onClick={() => this.handleClick(0)}>
                             <img className="col-1" src={this.state.poster1}/>
                             <p className="col-6">{this.state.movie1}</p>
@@ -130,7 +130,7 @@ class FilmInfo extends React.Component {
                         <div key={this.state.movieID} className="image row col-xl-6">
                             <img src={this.state.poster}/>
                         </div>
-                        <div className="col-xl-6 col-md-12" style={{after: {content: 'witam'}}}>
+                        <div className="col-xl-6 col-md-12">
                             <h3 className="col-xl-12">{this.state.title}</h3>
                             <p className="col-xl-12 overview">{this.state.overview}</p>
                             <div className="row col-xl-12">
