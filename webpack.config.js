@@ -1,20 +1,12 @@
-//Konfiguracja Webpack
 
 module.exports = {
-    entry: ["whatwg-fetch", "./js/app.jsx"],
+    entry: ["whatwg-fetch", "./src/app.jsx"],
     output: {
         filename: "./js/out.js"
     },
-    devServer: {
-        inline: true,
-        contentBase: './',
-        port: 3001
-    },
     watch: true,
-    devtool: 'source-map',
-
     module: {
-        loaders: [{
+        rules: [{
             test: /\.jsx$/,
             exclude: /node_modules/,
             loader: 'babel-loader',
@@ -23,15 +15,26 @@ module.exports = {
             }
         }, {
             test: /\.scss$/,
-            loader: ['style-loader', 'css-loader', 'sass-loader']
-            },
+            use: [{
+                loader: 'style-loader'
+            }, {
+                loader: 'css-loader',
+                options: {
+                    minimize: true
+                }
+            }, {
+                loader: 'sass-loader'
+            }]
+        },
             {
-                test: /\.(png|jpg|gif)$/,
+                test: /\.(png|jpg|gif|ttf|svg|mp4)$/,
                 exclude: /node_modules/,
                 use: [
                     {
                         loader: 'file-loader',
-                        options: {}
+                        options: {
+                            name: '[path][name].[ext]'
+                        }
                     }
                 ]
             }
