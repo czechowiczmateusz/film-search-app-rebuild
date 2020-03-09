@@ -1,159 +1,130 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
+import { MDBContainer, MDBRow, MDBCol, MDBIcon, MDBView, MDBMask, MDBRating } from 'mdbreact'
+import { useParams, Link } from 'react-router-dom'
+import { useFirestoreConnect } from 'react-redux-firebase'
+import axios from 'axios';
+import Navigation from './../Navigation/Navigation'
+import Rating from 'material-ui-rating'
+import { updateRating } from '../../store/actions/ratingActions'
 
 const FilmInfo = () => {
-    const [response, setResponse] = useState(false);
-    const [movieID, setMovieID] = useState(411088);
-    const [movies, setMovies] = useState(false);
-    const [display, setDisplay] = useState(false);
-    const [title, setTitle] = useState(null);
-    const [overview, setOverview] = useState(null);
+    const [movieData, setMovieData] = useState(false);
+    const [similarMovies, setSimilarMovies] = useState(false);
     const [vote, setVote] = useState(null);
-    const [poster, setPoster] = useState(null);
-    const [runtime, setRuntime] = useState(null);
-    const [date, setDate] = useState(null);
-    const [language, setLanguage] = useState(null);
-    const [back, setBack] = useState(null);
-    const [movie1, setMovie1] = useState(null);
-    const [movie2, setMovie2] = useState(null);
-    const [movie3, setMovie3] = useState(null);
-    const [movie4, setMovie4] = useState(null);
-    const [movie5, setMovie5] = useState(null);
-    const [poster1, setPoster1] = useState(null);
-    const [poster2, setPoster2] = useState(null);
-    const [poster3, setPoster3] = useState(null);
-    const [poster4, setPoster4] = useState(null);
-    const [poster5, setPoster5] = useState(null);
+
+    const { movieID } = useParams();
+
+    const dispatch = useDispatch();
+
+    useFirestoreConnect('rating')
+
+    const API_KEY = useSelector(state => state.auth.API_KEY)
+
+    const profileEmail = useSelector(state => state.firebase.profile.email)
+
+    const rating = useSelector(state => state.firestore.data.rating);
+
+    const addRating = ({ email, id, title, poster_path, vote, vote_average, year }) => dispatch(updateRating({ email, id, title, poster_path, vote, vote_average, year }));
+
+    const getMovieData = () => {
+        axios.get(`/movie/${movieID}?api_key=${API_KEY}`).then(resp => {
+            console.log(resp.data);
+            document.title = resp.data.title;
+            screen.width < 800 ? document.body.style.backgroundColor = '#080C12' : document.body.style.backgroundImage = `url(https://image.tmdb.org/t/p/original${resp.data.backdrop_path})`;
+            setMovieData(resp.data);
+        })
+    }
+
+    const getSimilarMovies = () => {
+        axios.get(`/movie/${movieID}/similar?api_key=${API_KEY}`).then(resp => setSimilarMovies(resp.data.results.slice(0, 6)))
+    }
 
     useEffect(() => {
-        let url = `https://api.themoviedb.org/3/movie/${movieID}?api_key=dc10a74e3b456f7ea1ca583b9da65d68&language=en-US`;
-        fetch(url).then(resp => resp.json()).then((data) => {
-            setResponse(data);
-            setTitle(data.original_title);
-            setOverview(data.overview);
-            setVote(data.vote_average);
-            setPoster(`https://image.tmdb.org/t/p/w500${data.poster_path}`);
-            setRuntime(data.runtime);
-            setDate(data.release_date);
-            setLanguage(data.original_language);
-            setBack(`https://image.tmdb.org/t/p/original${data.backdrop_path}`)
-        });
-    }, []);
+        movieData && addRating({
+            email: profileEmail,
+            id: movieData.id.toString(),
+            title: movieData.title,
+            poster_path: movieData.poster_path,
+            vote: vote,
+            vote_average: movieData.vote_average,
+            year: movieData.release_date.substring(0, 4)
+        })
+    }, [vote])
 
-    const handleChange = event => {
-        if(response && event.target.value.length > 1 && event.target.value.length < 15) {
-            let url = `https://api.themoviedb.org/3/search/movie?query=%${event.target.value}&sort_by=popularity.desc&api_key=dc10a74e3b456f7ea1ca583b9da65d68`;
-            fetch(url).then(resp => resp.json()).then(data => {
-                setMovies(data);
-                setMovie1(data.results[0] ? data.results[0].title : null);
-                setPoster1(data.results[0] ? `https://image.tmdb.org/t/p/w500${data.results[0].poster_path}` : null);
-                setMovie2(data.results[1] ? data.results[1].title : null);
-                setPoster2(data.results[1] ? `https://image.tmdb.org/t/p/w500${data.results[1].poster_path}` : null);
-                setMovie3(data.results[2] ? data.results[2].title : null);
-                setPoster3(data.results[2] ? `https://image.tmdb.org/t/p/w500${data.results[2].poster_path}` : null);
-                setMovie4(data.results[3] ? data.results[3].title : null);
-                setPoster4(data.results[3] ? `https://image.tmdb.org/t/p/w500${data.results[3].poster_path}` : null);
-                setMovie5(data.results[4] ? data.results[4].title : null);
-                setPoster5(data.results[4] ? `https://image.tmdb.org/t/p/w500${data.results[4].poster_path}` : null);
-                setDisplay(!!data.results[0]);
-            });
-        } else if(event.target.value.length <= 1) {
-            setDisplay(false);
-        } else {
-            setDisplay(false)
+    useEffect(() => {
+        if(profileEmail && rating && rating[profileEmail] && rating[profileEmail][movieID] && rating[profileEmail][movieID].vote) {
+            setVote(rating[profileEmail][movieID].vote);
         }
-    };
-
-    const fetchNewMovie = movieID => {
-        if (movies) {
-            let url = `https://api.themoviedb.org/3/movie/${movieID}?api_key=dc10a74e3b456f7ea1ca583b9da65d68`;
-            fetch(url).then(resp => resp.json()).then(data => {
-                setMovieID(movieID);
-                setTitle(data.original_title);
-                setOverview(data.overview);
-                setVote(data.vote_average);
-                setPoster(`https://image.tmdb.org/t/p/w500${data.poster_path}`);
-                setRuntime(data.runtime);
-                setDate(data.release_date);
-                setLanguage(data.original_language);
-                setBack(`https://image.tmdb.org/t/p/original${data.backdrop_path}`);
-            });
-        }
-    };
-
-    const changeTitle = movieID => {
-        if(movies) {
-            let url = `https://api.themoviedb.org/3/movie/${movieID}?api_key=dc10a74e3b456f7ea1ca583b9da65d68`;
-            fetch(url).then(resp => resp.json()).then(data => {
-                document.title = data.original_title
-            })
-        }
-    };
-
-    const handleClick = id => {
-        let films = movies.results;
-        fetchNewMovie(films[id].id);
-        changeTitle(films[id].id);
-        setDisplay(false);
-    };
-    screen.width < 800 ? document.body.style.backgroundColor = '#080C12' : document.body.style.backgroundImage = `url(${back})`;
+    }, [profileEmail])
+    
+    useEffect(() => {
+        getMovieData();
+        getSimilarMovies();
+    }, [movieID]);
 
     return (
-        <div>
-            <header className="col-xl-12 row">
-                <form className="input-group col-xl-12" onSubmit={handleClick}>
-                    <input onChange={handleChange} placeholder="Search Movie Title in English..."
-                           className="form-control col-12"/>
-                </form>
-            </header>
-            <div className="col-xl-12 typeahead row" style={{display: display ? "block" : "none"}}>
-                <div className="col-xl-12 row" onClick={() => handleClick(0)}>
-                    <img src={poster1}/>
-                    <p className="col-6">{movie1}</p>
-                </div>
-                <div className="col-xl-12 row" onClick={() => handleClick(1)}>
-                    <img src={poster2}/>
-                    <p className="col-6">{movie2}</p>
-                </div>
-                <div className="col-xl-12 row" onClick={() => handleClick(2)}>
-                    <img src={poster3}/>
-                    <p className="col-6">{movie3}</p>
-                </div>
-                <div className="col-xl-12 row" onClick={() => handleClick(3)}>
-                    <img src={poster4}/>
-                    <p className="col-6">{movie4}</p>
-                </div>
-                <div className="col-xl-12 row" onClick={() => handleClick(4)}>
-                    <img src={poster5}/>
-                    <p className="col-6">{movie5}</p>
-                </div>
-            </div>
-            <div className="row main col-xl-12">
-                <div key={movieID} className="image row col-xl-6">
-                    <img src={poster}/>
-                </div>
-                <div className="col-xl-6 col-md-12">
-                    <h3 className="col-xl-12">{title}</h3>
-                    <p className="col-xl-12 overview">{overview}</p>
-                    <div className="row col-xl-12">
-                        <p className="col-xl-6 smaller">Release date: </p>
-                        <p className="col-xl-6 info">{date}</p>
-
-                    </div>
-                    <div className="row col-xl-12">
-                        <p className="col-xl-6 smaller">Vote Average: </p>
-                        <p className="col-xl-6 info">{vote}/10</p>
-                    </div>
-                    <div className="row col-xl-12">
-                        <p className="col-xl-6 smaller">Runtime: </p>
-                        <p className="col-xl-6 info">{runtime} mins</p>
-                    </div>
-                    <div className="row col-xl-12">
-                        <p className="col-xl-6 smaller">Original language: </p>
-                        <p className="col-xl-6 info">{language}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <Fragment>
+            <Navigation/>
+            <MDBContainer className="mt-5 pt-4 pb-4" style={{backgroundColor: 'rgba(0, 0, 0, 0.6)', fontFamily: "'Palanquin', sans-serif"}}>
+                <MDBRow>
+                    <MDBCol>
+                        {movieData.poster_path ? <img src={`https://image.tmdb.org/t/p/w500${movieData.poster_path}`} className="img-fluid" alt={movieData.title} /> : null}
+                    </MDBCol>
+                    <MDBCol className="mt-4">
+                        <h1 className="white-text ont-weight-bold">{movieData.title}</h1>
+                        <p className="lime-text">{movieData.tagline}</p>
+                        <h3 className="white-text">{movieData.vote_average}/10</h3>
+                        <Rating
+                            name="simple-controlled"
+                            value={vote ? vote : 0}
+                            max={10}
+                            onChange={(value) => setVote(value)}
+                        />
+                        <p className="grey-text">{movieData.overview}</p>
+                        <MDBRow className="mt-2">
+                            <MDBCol><h4 className="lime-text">release date</h4></MDBCol>
+                            <MDBCol><h4 className="white-text">{movieData.release_date}</h4></MDBCol>
+                        </MDBRow>
+                        <MDBRow className="mt-2">
+                            <MDBCol><h4 className="lime-text">original language</h4></MDBCol>
+                            <MDBCol><h4 className="white-text">{movieData.original_language}</h4></MDBCol>
+                        </MDBRow>
+                        <MDBRow className="mt-2">
+                            <MDBCol><h4 className="lime-text">production</h4></MDBCol>
+                            <MDBCol><h4 className="white-text">{movieData.production_countries && movieData.production_countries.map((country, index) => <span key={index}>{country.name} {index + 1 === movieData.production_countries.length ? '' : <span className="lime-text"> / </span>}</span>)}</h4></MDBCol>
+                        </MDBRow>
+                        <MDBRow className="mt-2">
+                            <MDBCol><h4 className="lime-text">status</h4></MDBCol>
+                            <MDBCol><h4 className="white-text">{movieData.status}</h4></MDBCol>
+                        </MDBRow>
+                        <MDBRow className="mt-2">
+                            <MDBCol><h4 className="lime-text">genres</h4></MDBCol>
+                            <MDBCol><h4 className="white-text">{movieData.genres && movieData.genres.map((genre, index) => <span key={index}>{genre.name} {index + 1 === movieData.genres.length ? '' : <span className="lime-text"> / </span>}</span>)}</h4></MDBCol>
+                        </MDBRow>
+                    </MDBCol>
+                </MDBRow>
+                <h4 className="white-text mt-4 mb-4">Similar movies:</h4>
+                <MDBRow>
+                    {similarMovies && similarMovies.map((movie, index) => (
+                        <MDBCol key={index} lg="4 mt-2 mb-2">
+                            <Link to={`/movie/${movie.id}`}>
+                                <MDBView hover>
+                                    <img
+                                        src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
+                                        className="img-fluid"
+                                        alt={movie.title}
+                                    />
+                                    <MDBMask className="flex-center" overlay="lime-strong">
+                                        <h3 className="white-text text-center">{movie.title}</h3>
+                                    </MDBMask>
+                                </MDBView>
+                            </Link>
+                        </MDBCol>
+                    ))}
+                </MDBRow>
+            </MDBContainer>
+        </Fragment>
     );
 };
 

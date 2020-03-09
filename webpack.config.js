@@ -1,40 +1,48 @@
+const path = require('path');
 
 module.exports = {
-    entry: ["whatwg-fetch", "./src/app.jsx"],
+    entry: './src/index.jsx',
     output: {
-        filename: "./js/out.js"
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'bundle.js'
     },
-    watch: true,
+    devServer: {
+        historyApiFallback: true,
+    },
     module: {
-        rules: [{
-            test: /\.jsx$/,
-            exclude: /node_modules/,
-            loader: 'babel-loader',
-            query: {
-                presets: ['@babel/preset-env', '@babel/preset-react']
-            }
-        }, {
-            test: /\.scss$/,
-            use: [{
-                loader: 'style-loader'
-            }, {
-                loader: 'css-loader'
-            }, {
-                loader: 'sass-loader'
-            }]
-        },
+        rules: [
             {
-                test: /\.(png|jpg|gif|ttf|svg|mp4)$/,
+                test: /\.css$/i,
+                use: ['style-loader', 'css-loader'],
+            },
+            {
+                test: /\.js|jsx$/,
                 exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env', '@babel/preset-react'],
+                        plugins: [
+                            "@babel/plugin-proposal-class-properties",
+                            "@babel/transform-runtime"
+                        ]
+                    }
+                }
+            },
+            {
+                test: /\.(png|jpe?g|gif|svg|ttf|eot|woff|woff2)$/,
                 use: [
                     {
-                        loader: 'file-loader',
+                        loader: "url-loader",
                         options: {
-                            name: '[path][name].[ext]'
-                        }
+                            outputPath: 'files',
+                        },
                     }
                 ]
             }
         ]
+    },
+    resolve: {
+        extensions: ['*', '.js', '.jsx']
     }
 };
