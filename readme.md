@@ -1,6 +1,6 @@
 # Film-search-app-rebuild
 
-Rebuild of my first serious project called Film-search-app.
+Rebuild of my first serious project called Film-search-app. Currently only desktop version.
 
 ## What's new?
 
@@ -24,4 +24,4 @@ Rebuild of my first serious project called Film-search-app.
 
 ## Demo
 
-* https://czechowiczmateusz.github.io/Film-search-app-rebuild/
+* https://czechowiczmateusz.github.io/film-search-app-rebuild
