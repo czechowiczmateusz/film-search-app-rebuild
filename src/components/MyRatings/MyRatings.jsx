@@ -25,6 +25,8 @@ const MyRatings = () => {
         document.title = 'Film-search-app';
     }, [])
 
+    console.log(myMovies);
+
     useEffect(() => {
         if(profileEmail && rating && rating[profileEmail]) {
             const objectMap = (obj, fn) => {
@@ -42,7 +44,7 @@ const MyRatings = () => {
         <Fragment>
             <Navigation/>
             <MDBContainer fluid className="mt-5 pt-5 pb-4">
-                <h1 className="text-center black-text font-weight-bold">MY RATINGS</h1>
+                <h1 className="text-center white-text font-weight-bold">MY RATINGS</h1>
                 <MDBCard style={{backgroundColor: 'rgba(0, 0, 0, 0.8)'}} className="my-5 px-5 pb-5">
                     <MDBCardBody>
                         {myMovies && myMovies.map((movie, index) => (

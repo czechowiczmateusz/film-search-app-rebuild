@@ -65,8 +65,8 @@ const FilmInfo = () => {
 
     return (
         <Fragment>
-            <Navigation/>
-            <MDBContainer className="mt-5 pt-4 pb-4" style={{backgroundColor: 'rgba(0, 0, 0, 0.6)', fontFamily: "'Palanquin', sans-serif"}}>
+            <Navigation color/>
+            <MDBContainer className="pt-4 pb-4 mb-5" style={{marginTop: 'calc(3rem + 94px)', backgroundColor: 'rgba(0, 0, 0, 0.6)', fontFamily: "'Palanquin', sans-serif"}}>
                 <MDBRow>
                     <MDBCol>
                         {movieData.poster_path ? <img src={`https://image.tmdb.org/t/p/w500${movieData.poster_path}`} className="img-fluid" alt={movieData.title} /> : null}
@@ -115,7 +115,7 @@ const FilmInfo = () => {
                                         className="img-fluid"
                                         alt={movie.title}
                                     />
-                                    <MDBMask className="flex-center" overlay="lime-strong">
+                                    <MDBMask style={{cursor: 'pointer'}} className="flex-center" overlay="lime-strong">
                                         <h3 className="white-text text-center">{movie.title}</h3>
                                     </MDBMask>
                                 </MDBView>

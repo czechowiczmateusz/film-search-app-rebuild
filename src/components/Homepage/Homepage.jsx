@@ -2,11 +2,14 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { useSelector } from 'react-redux'
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardImage, MDBCardBody, MDBCardTitle, MDBView, MDBSpinner } from 'mdbreact'
 import { Link } from 'react-router-dom'
+import { useFirestoreConnect } from 'react-redux-firebase'
 import axios from 'axios';
 import Navigation from './../Navigation/Navigation'
 
 const Homepage = () => {
     const [trendingMovies, setTrendingMovies] = useState(false);
+
+    useFirestoreConnect('rating')
 
     const API_KEY = useSelector(
         state => state.auth.API_KEY
@@ -29,9 +32,16 @@ const Homepage = () => {
             {profile && profile.isLoaded ? (
                 <Fragment>
                     <Navigation/>
-                    {trendingMovies && <div className="mt-5" style={{backgroundImage: `url("https://image.tmdb.org/t/p/original${trendingMovies[0].backdrop_path}")`, height: '65vh', width: '100%', backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}}/>}
+                        <main style={{position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                            <video style={{objectFit: 'cover', width: '100%', height: '100vh '}} muted autoPlay playsinline loop>
+                                <source src={require('./../../../styles/videos/old-movie-intro.mp4')} type="video/mp4"/>
+                            </video>
+                            <div style={{height: '100vh', width: '100%', position: 'absolute', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: '200'}}>
+                                <img src={require('./../../../styles/images/film-search-app-logo.png')} height="200" alt="Film search app logo" />
+                            </div>
+                        </main>
                     <MDBContainer fluid className="pt-4 pb-4">
-                        <h1 className="text-center black-text font-weight-bold">TOP TRENDING MOVIES OF THE WEEK</h1>
+                        <h1 className="text-center white-text font-weight-bold">TOP TRENDING MOVIES OF THE WEEK</h1>
                         <MDBRow>
                             {trendingMovies && trendingMovies.map((movie, index) => (
                                 <MDBCol key={index} size="2" className="mt-2 mb-2">
@@ -41,7 +51,7 @@ const Homepage = () => {
                                                 <MDBCardImage className="img-fluid" src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} waves />
                                             </MDBView>
                                             <MDBCardBody style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                                                <MDBCardTitle className="black-text">{movie.title}</MDBCardTitle>
+                                                <MDBCardTitle className="white-text">{movie.title}</MDBCardTitle>
                                             </MDBCardBody>
                                         </MDBCard>
                                     </Link>

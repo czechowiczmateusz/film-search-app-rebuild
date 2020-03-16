@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 import { signOut } from '../../store/actions/authActions'
 import './Navigation.css'
 
-const Navigation = () => {
+const Navigation = (props) => {
     const [query, setQuery] = useState('');
     const [results, setResults] = useState(null);
 
@@ -28,20 +28,20 @@ const Navigation = () => {
 
     return (
         <Fragment>
-            <MDBNavbar fixed="top" color="elegant-color" dark expand="md">
+            <MDBNavbar scrolling transparent={props.color ? false : true} fixed="top" style={{zIndex: '300', marginBotom: '50px'}} color="black" dark expand="md">
                 <MDBNavbarBrand>
-                    <strong className="lime-text">Film-search-app</strong>
+                    <img src={require('./../../../styles/images/film-search-app-logo-mini.png')} height="60" alt="Film search app logo" />
                 </MDBNavbarBrand>
                 <MDBCollapse isOpen={true} navbar>
                     <MDBNavbarNav left>
                         <MDBNavItem>
                             <MDBNavLink to="/homepage">
-                                Homepage
+                                HOMEPAGE
                             </MDBNavLink>
                         </MDBNavItem>
                         <MDBNavItem>
                             <MDBNavLink to="/my-ratings">
-                                My ratings
+                                MY RATINGS
                             </MDBNavLink>
                         </MDBNavItem>
                         <MDBNavItem className="nav__search">
@@ -64,7 +64,7 @@ const Navigation = () => {
                         <MDBNavItem onClick={logout}>
                             <MDBNavLink to="/login">
                                 <MDBIcon className="pr-2" icon="sign-out-alt" />
-                                Logout
+                                LOGOUT
                             </MDBNavLink>
                         </MDBNavItem> 
                     </MDBNavbarNav>

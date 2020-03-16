@@ -9,6 +9,10 @@
     color: #fff !important;
 }
 
+.nav-link.active {
+    color: #cddc39 !important;
+}
+
 .dropdown-content li:hover, .dropdown-content li.active {
     background-color: #5b5b5b !important;
 }
