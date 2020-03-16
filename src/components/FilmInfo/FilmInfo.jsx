@@ -55,8 +55,10 @@ const FilmInfo = () => {
     useEffect(() => {
         if(profileEmail && rating && rating[profileEmail] && rating[profileEmail][movieID] && rating[profileEmail][movieID].vote) {
             setVote(rating[profileEmail][movieID].vote);
+        } else {
+            setVote(null);
         }
-    }, [profileEmail])
+    }, [profileEmail, movieID])
     
     useEffect(() => {
         getMovieData();
