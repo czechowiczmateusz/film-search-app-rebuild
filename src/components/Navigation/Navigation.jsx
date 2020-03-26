@@ -6,11 +6,12 @@ import { MDBInput, MDBSelectInput, MDBSelect, MDBSelectOptions, MDBSelectOption,
     MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem } from 'mdbreact'
 import { Link } from 'react-router-dom'
 import { signOut } from '../../store/actions/authActions'
-import './Navigation.css'
+import './../../../styles/Navigation.css'
 
-const Navigation = (props) => {
+const Navigation = React.forwardRef((props, ref) => {
     const [query, setQuery] = useState('');
     const [results, setResults] = useState(null);
+    const { miniLogo, homepage, ratings, search, user, log } = ref;
 
     const dispatch = useDispatch();
 
@@ -27,51 +28,60 @@ const Navigation = (props) => {
     }, [query])
 
     return (
-        <Fragment>
+        <div>
             <MDBNavbar scrolling transparent={props.color ? false : true} fixed="top" style={{zIndex: '300', marginBotom: '50px'}} color="black" dark expand="md">
                 <MDBNavbarBrand>
-                    <img src={require('./../../../styles/images/film-search-app-logo-mini.png')} height="60" alt="Film search app logo" />
+                    <img ref={miniLogo} src={require('./../../../styles/images/film-search-app-logo-mini.png')} height="60" alt="Film search app logo" />
                 </MDBNavbarBrand>
                 <MDBCollapse isOpen={true} navbar>
                     <MDBNavbarNav left>
                         <MDBNavItem>
-                            <MDBNavLink to="/homepage">
-                                HOMEPAGE
-                            </MDBNavLink>
+                            <div ref={homepage}>
+                                <MDBNavLink to="/homepage">
+                                    HOMEPAGE
+                                </MDBNavLink>
+                            </div>
                         </MDBNavItem>
                         <MDBNavItem>
-                            <MDBNavLink to="/my-ratings">
-                                MY RATINGS
-                            </MDBNavLink>
+                            <div ref={ratings}>
+                                <MDBNavLink to="/my-ratings">
+                                    MY RATINGS
+                                </MDBNavLink>
+                            </div>
                         </MDBNavItem>
                         <MDBNavItem className="nav__search">
-                            <MDBInput className="input__search" hint="Search movie title..." value={query} onChange={() => setQuery(event.target.value)} type="text"/>
-                            {results && results.length > 0 && <MDBSelect
-                                getValue={(value) => value && setQuery('')}
-                                className="results__dropdown"
-                                >
-                                <MDBSelectInput/>
-                                <MDBSelectOptions className="results__open">
-                                    {results && results.map((value, index) => <Link key={index} to={`/movie/${value.id}`}><MDBSelectOption value={value.title} key={index} icon={value.poster_path ? `https://image.tmdb.org/t/p/w500${value.poster_path}` : null}>{value.title}</MDBSelectOption></Link>) }
-                                </MDBSelectOptions>
-                            </MDBSelect>}
+                            <div ref={search}>
+                                <MDBInput className="input__search" hint="Search movie title..." value={query} onChange={() => setQuery(event.target.value)} type="text"/>
+                                {results && results.length > 0 && <MDBSelect
+                                    getValue={(value) => value && setQuery('')}
+                                    className="results__dropdown"
+                                    >
+                                    <MDBSelectInput/>
+                                    <MDBSelectOptions className="results__open">
+                                        {results && results.map((value, index) => <Link key={index} to={`/movie/${value.id}`}><MDBSelectOption value={value.title} key={index} icon={value.poster_path ? `https://image.tmdb.org/t/p/w500${value.poster_path}` : null}>{value.title}</MDBSelectOption></Link>) }
+                                    </MDBSelectOptions>
+                                </MDBSelect>}
+                            </div>
                         </MDBNavItem>
                     </MDBNavbarNav>
                     <MDBNavbarNav right>
                         <MDBNavbarBrand>
-                            <strong className="lime-text">{profile.username}</strong>
+                            <strong ref={user} className="lime-text">{profile.username}</strong>
                         </MDBNavbarBrand>
                         <MDBNavItem onClick={logout}>
-                            <MDBNavLink to="/login">
-                                <MDBIcon className="pr-2" icon="sign-out-alt" />
-                                LOGOUT
-                            </MDBNavLink>
+                            <div ref={log}>
+                                <MDBNavLink to="/login">
+                                    <MDBIcon className="pr-2" icon="sign-out-alt" />
+                                    LOGOUT
+                                </MDBNavLink>
+                            </div>
                         </MDBNavItem> 
                     </MDBNavbarNav>
                 </MDBCollapse>
             </MDBNavbar>
-        </Fragment>
+        </div>
     )
-}
+    }
+)
 
 export default Navigation

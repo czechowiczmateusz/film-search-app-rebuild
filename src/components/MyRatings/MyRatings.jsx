@@ -1,9 +1,10 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, useRef } from 'react';
 import { useSelector } from 'react-redux'
 import { useFirestoreConnect } from 'react-redux-firebase'
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardImage, MDBCardBody, MDBCardTitle, MDBView, MDBMask } from 'mdbreact'
 import { Link, useLocation } from 'react-router-dom'
 import axios from 'axios';
+import { TweenMax, Expo } from 'gsap';
 import Navigation from './../Navigation/Navigation'
 import Rating from 'material-ui-rating'
 import { updateRating } from '../../store/actions/ratingActions'
@@ -11,6 +12,14 @@ import { updateRating } from '../../store/actions/ratingActions'
 const MyRatings = () => {
     const [myMovies, setMyMovies] = useState([]);
     const [vote, setVote] = useState(null);
+    const container = useRef(null);
+    const miniLogo = useRef(null);
+    const homepage = useRef(null);
+    const ratings = useRef(null);
+    const search = useRef(null);
+    const user = useRef(null);
+    const log = useRef(null);
+    const navigation = {miniLogo, homepage, ratings, search, user, log}
 
     useFirestoreConnect('rating')
 
@@ -40,9 +49,17 @@ const MyRatings = () => {
         }
     }, [profileEmail, location.pathname])
 
+    useEffect(() => {
+        TweenMax.from(container.current, 1, {
+            width: "100%",
+            ease: Expo.easeInOut
+        });
+    }, [])
+
     return (
         <Fragment>
-            <Navigation/>
+            <div style={{position: 'absolute', left: '0', width: '0%', top: '0', height: '100%', backgroundColor: '#cddc39', zIndex: '600'}} ref={container}></div>
+            <Navigation ref={navigation}/>
             <MDBContainer fluid className="mt-5 pt-5 pb-4">
                 <h1 className="text-center white-text font-weight-bold">MY RATINGS</h1>
                 <MDBCard style={{backgroundColor: 'rgba(0, 0, 0, 0.8)'}} className="my-5 px-5 pb-5">

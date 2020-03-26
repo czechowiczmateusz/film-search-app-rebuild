@@ -49,7 +49,7 @@ const App = () => {
                 )
             ) : (
                 <MDBContainer className="container__init">
-                    <MDBSpinner big/>
+                    <MDBSpinner green big/>
                 </MDBContainer>
             )}
         </Fragment>   

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { MDBContainer, MDBRow, MDBCol, MDBIcon, MDBView, MDBMask, MDBRating } from 'mdbreact'
 import { useParams, Link } from 'react-router-dom'
@@ -7,11 +7,20 @@ import axios from 'axios';
 import Navigation from './../Navigation/Navigation'
 import Rating from 'material-ui-rating'
 import { updateRating } from '../../store/actions/ratingActions'
+import { TweenMax, Expo } from 'gsap';
 
 const FilmInfo = () => {
     const [movieData, setMovieData] = useState(false);
     const [similarMovies, setSimilarMovies] = useState(false);
     const [vote, setVote] = useState(null);
+    const container = useRef(null);
+    const miniLogo = useRef(null);
+    const homepage = useRef(null);
+    const ratings = useRef(null);
+    const search = useRef(null);
+    const user = useRef(null);
+    const log = useRef(null);
+    const navigation = {miniLogo, homepage, ratings, search, user, log}
 
     const { movieID } = useParams();
 
@@ -65,9 +74,17 @@ const FilmInfo = () => {
         getSimilarMovies();
     }, [movieID]);
 
+    useEffect(() => {
+        TweenMax.from(container.current, 1, {
+            width: "100%",
+            ease: Expo.easeInOut
+        });
+    }, [])
+
     return (
         <Fragment>
-            <Navigation color/>
+            <div style={{position: 'absolute', left: '0', width: '0%', top: '0', height: '100%', backgroundColor: '#cddc39', zIndex: '600'}} ref={container}></div>
+            <Navigation ref={navigation} color/>
             <MDBContainer className="pt-4 pb-4 mb-5" style={{marginTop: 'calc(3rem + 94px)', backgroundColor: 'rgba(0, 0, 0, 0.6)', fontFamily: "'Palanquin', sans-serif"}}>
                 <MDBRow>
                     <MDBCol>
