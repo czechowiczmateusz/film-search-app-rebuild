@@ -102,7 +102,7 @@ const Homepage = () => {
 
     return (
         <Fragment>
-            {profile && profile.isLoaded ? (
+            {profile && profile.isLoaded && (
                 <Fragment>
                     <div style={{position: 'absolute', left: '0%', width: '0%', height: '100%', backgroundColor: '#cddc39', zIndex: '600'}} ref={container}></div>
                     <Navigation ref={navigation}/>
@@ -134,10 +134,6 @@ const Homepage = () => {
                         </MDBRow>
                     </MDBContainer>
                 </Fragment>
-            ) : (
-                <MDBContainer className="container__init">
-                    <MDBSpinner green big/>
-                </MDBContainer>
             )}
         </Fragment>
     );
