@@ -66,7 +66,7 @@ const Register = () => {
                 className="justify-content-center align-content-center"
             >
                 <MDBCol md="6">
-                <MDBCard style={{backgroundColor: 'rgba(0, 0, 0, 0.8)'}}>
+                <MDBCard style={{backgroundColor: 'rgba(0, 0, 0, 0.8)', border: '1px solid #c3c930', borderRadius: '25px'}}>
                     <MDBCardBody>
                         <form noValidate>
                             <p className="h4 text-center py-4 white-text">Register</p>
