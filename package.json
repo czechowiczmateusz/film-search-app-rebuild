@@ -22,7 +22,7 @@
     "css-loader": "^3.2.0",
     "file-loader": "^1.1.11",
     "mdbreact": "./mdbreact-4.25.3.tgz",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "react": "^16.13.0",
     "react-body-images": "^1.0.1",
     "react-dom": "^16.13.0",
